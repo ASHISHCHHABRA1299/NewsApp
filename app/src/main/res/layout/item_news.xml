@@ -4,17 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp">
-
+    android:padding="12dp">
+    
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="22sp"
+        android:textSize="20sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="12dp"
         android:textColor="#212121"
         tools:ignore="MissingConstraints" />
-
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="12sp"
+        android:layout_marginTop="12dp"
+        android:textColor="#212121"
+        tools:ignore="MissingConstraints"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
