@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,13 +27,13 @@ import com.bumptech.glide.request.target.Target;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements NewsItemClicked {
+public class MainActivity extends AppCompatActivity implements NewsItemClicked,AdapterView.OnItemSelectedListener {
     RecyclerView mRecyclerView;
     NewsListAdapter myadapter;
+    Spinner mSpinner;
+    String url="https://newsapi.org/v2/top-headlines?country=in&category=";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +41,14 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         mRecyclerView=(RecyclerView)findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        fetchdata();
+        mSpinner=(Spinner)findViewById(R.id.categories);
+        mSpinner.setOnItemSelectedListener(this);
         myadapter=new NewsListAdapter(this);
         mRecyclerView.setAdapter(myadapter);
     }
 
-    private void fetchdata(){
-        String url="https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f545eab44cea4fee8ba496becd3f7c95";
+    private void fetchdata(String url){
+//        String url="https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f545eab44cea4fee8ba496becd3f7c95";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -82,5 +85,15 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(this, Uri.parse(item.url));
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        fetchdata(url+adapterView.getSelectedItem().toString()+"&apiKey=f545eab44cea4fee8ba496becd3f7c95");
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
